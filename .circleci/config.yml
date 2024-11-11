@@ -1,1 +1,22 @@
+version: 2.1
 
+jobs:
+sonarcloud_scan:
+docker:
+- image: circleci/node:latest # Adjust this to your project’s needs
+steps:
+- checkout
+- run:
+name: Run SonarCloud Scan
+command: |
+npx sonar-scanner
+-Dsonar.projectKey=Cozykwabs_APDS-nexatech-pipeline-test-
+-Dsonar.organization=nexatech-pipeline-test1
+-Dsonar.host.url=https://sonarcloud.io
+-Dsonar.login=$SONAR_TOKEN
+
+workflows:
+version: 2
+sonarcloud_scan:
+jobs:
+- sonarcloud_scan
